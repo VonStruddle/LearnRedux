@@ -7,11 +7,25 @@ var reducer = (state = {
   showCompleted: false,
   todos: [] 
 }, action) => {
-  return state;
+  switch (action.type) {
+    case 'CHANGE_SEARCHTEXT':
+      return {
+        ...state,
+        searchText: action.searchText
+      };
+    default:
+      return state;
+  }
 };
 
 var store = redux.createStore(reducer);
 
-var currentState = store.getState();
+console.log('currentState:', store.getState());
 
-console.log('currentState: ', currentState)
+var changeSearchText = {
+  type: 'CHANGE_SEARCHTEXT',
+  searchText: 'Eat vegetables'
+}
+store.dispatch(changeSearchText);
+
+console.log('currentState:', store.getState());
