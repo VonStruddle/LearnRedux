@@ -3,8 +3,6 @@ var redux = require('redux');
 console.log('Starting Redux example');
 
 var reducer = (state = { name: 'Anonymous' }, action) => {
-  console.log('New action:', action);
-
   switch (action.type) {
     case 'CHANGE_NAME':
       return {
@@ -16,16 +14,20 @@ var reducer = (state = { name: 'Anonymous' }, action) => {
   }
 };
 
-var store = redux.createStore(reducer);
+var store = redux.createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-var currentState = store.getState();
-console.log('currentState:', currentState);
+store.subscribe(() => {
+  var state = store.getState();
 
-var action = {
+  console.log('Name is', state.name);
+});
+
+store.dispatch({
   type: 'CHANGE_NAME',
   name: 'Quentin'
-};
-store.dispatch(action);
+});
 
-currentState = store.getState();
-console.log('currentState:', currentState);
+store.dispatch({
+  type: 'CHANGE_NAME',
+  name: 'Dudu'
+});

@@ -18,14 +18,20 @@ var reducer = (state = {
   }
 };
 
-var store = redux.createStore(reducer);
+var store = redux.createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-console.log('currentState:', store.getState());
+store.subscribe(() => {
+  var state = store.getState();
+  console.log(state);
+  document.getElementById('app').innerHTML = state.searchText;
+});
 
-var changeSearchText = {
+store.dispatch({
   type: 'CHANGE_SEARCHTEXT',
   searchText: 'Eat vegetables'
-}
-store.dispatch(changeSearchText);
+});
 
-console.log('currentState:', store.getState());
+store.dispatch({
+  type: 'CHANGE_SEARCHTEXT',
+  searchText: 'Do some sport'
+});
