@@ -28,7 +28,13 @@ var reducer = (state = defaultState, action) => {
             hobby: action.hobby
           }
         ]
-      }
+      };
+    case 'REMOVE_HOBBY':
+      return {
+        ...state,
+        hobbies: state.hobbies
+          .filter((hobby) => hobby.id !== action.id)
+      };
     case 'ADD_MOVIE':
       return {
         ...state,
@@ -39,7 +45,13 @@ var reducer = (state = defaultState, action) => {
             ...action.movie
           }
         ]
-      }
+      };
+    case 'REMOVE_MOVIE':
+      return {
+        ...state,
+        movies: state.movies
+          .filter((movie) => movie.id !== action.id)
+      };
     default:
       return state;
   }
@@ -64,6 +76,16 @@ store.dispatch({
 });
 
 store.dispatch({
+  type: 'ADD_HOBBY',
+  hobby: 'High-frequency musculation'
+});
+
+store.dispatch({
+  type: 'REMOVE_HOBBY',
+  id: 2
+});
+
+store.dispatch({
   type: 'ADD_MOVIE',
   movie: {
     title: 'Barry Lyndon',
@@ -77,6 +99,11 @@ store.dispatch({
     title: 'Goldeneye',
     genre: 'action'
   }
+});
+
+store.dispatch({
+  type: 'REMOVE_MOVIE',
+  id: 1
 });
 
 store.dispatch({
